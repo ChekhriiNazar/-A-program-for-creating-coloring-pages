@@ -12,10 +12,16 @@ namespace курсова
         private Bitmap originalFrame;
         private Bitmap editedFrame;
         private bool isVideoPlaying;
+        private double contourContrast;
 
         public Form1()
         {
             InitializeComponent();
+            trackBar.Minimum = 0;
+            trackBar.Maximum = 10;
+            trackBar.Value = 0;
+            trackBar.TickFrequency = 1;
+            trackBar.Scroll += TrackBar_Scroll;
         }
 
         private void Open_Click(object sender, EventArgs e)
@@ -85,20 +91,22 @@ namespace курсова
 
                 Mat contoursImage = new Mat();
                 Cv2.CvtColor(cannyImage, contoursImage, ColorConversionCodes.GRAY2BGR);
-
                 OpenCvSharp.Point[][] contours;
                 HierarchyIndex[] hierarchy;
-
-                Cv2.FindContours(cannyImage, out contours, out hierarchy, RetrievalModes.External, ContourApproximationModes.ApproxSimple);
-
+                Cv2.FindContours(cannyImage, out contours, out hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxSimple);
                 Cv2.DrawContours(contoursImage, contours, -1, Scalar.Black, -1, LineTypes.Link8, hierarchy);
-
                 Cv2.BitwiseNot(cannyImage, cannyImage);
                 contoursImage.SetTo(Scalar.White, cannyImage);
+                for (int i = 0; i < contours.Length; i++)
+                {
+                    Scalar color = new Scalar(0, 0, 0);
+                    int thickness = (int)(0 + contourContrast);
+                    Cv2.DrawContours(contoursImage, contours, i, color, thickness, LineTypes.Link8, hierarchy);
+                }
+
 
                 editedFrame = BitmapConverter.ToBitmap(contoursImage);
                 pictureBox.Image = editedFrame;
-
             }
             else if (videoCapture != null && videoCapture.IsOpened())
             {
@@ -126,9 +134,15 @@ namespace курсова
         }
 
         private void Clear_Click(object sender, EventArgs e)
-        {          
-                pictureBox.Image = null;
-                editedFrame = null;           
+        {
+            pictureBox.Image = null;
+            editedFrame = null;
+        }
+
+        private void TrackBar_Scroll(object sender, EventArgs e)
+        {
+            contourContrast = trackBar.Value;
+            Contours_Click(sender, e);
         }
     }
 }

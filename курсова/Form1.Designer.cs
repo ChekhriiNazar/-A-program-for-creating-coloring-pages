@@ -37,7 +37,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.Clear = new System.Windows.Forms.Button();
+            this.trackBar = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox
@@ -133,11 +135,20 @@
             this.Clear.UseVisualStyleBackColor = true;
             this.Clear.Click += new System.EventHandler(this.Clear_Click);
             // 
+            // trackBar
+            // 
+            this.trackBar.Location = new System.Drawing.Point(676, 104);
+            this.trackBar.Name = "trackBar";
+            this.trackBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.trackBar.Size = new System.Drawing.Size(112, 56);
+            this.trackBar.TabIndex = 9;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.trackBar);
             this.Controls.Add(this.Clear);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -150,6 +161,7 @@
             this.Name = "Form1";
             this.Text = "OpenCV";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -166,6 +178,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button Clear;
+        private System.Windows.Forms.TrackBar trackBar;
     }
 }
 
